@@ -1,0 +1,48 @@
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Webpage Design</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/home.css') }}">
+</head>
+<body>
+    <div class="main">
+        <div class="navbar">
+            <div class="icon">
+                <h2 class="logo">LabLogix</h2>
+            </div>
+
+            <div class="menu">
+                <ul>
+                    <li><a href="{{ url_for('home') }}">HOME</a></li>
+                    <li><a href="{{ url_for('AboutUs') }}">ABOUT</a></li>
+                    <li><a href="#">ACCOUNT</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropbtn">LAB MANAGEMENT</a>
+                        <div class="dropdown-content">
+                            <a href="{{ url_for('addLab') }}">Add Lab</a>
+                            <a href="#">Lab Listing</a>
+                            <a href="{{ url_for('addSoftware') }}">Add Software</a>
+                            <a href="#">Software Listing</a>
+                        </div>
+                    </li>
+                    <li><a href="{{ url_for('login') }}">LOGIN</a></li>
+                </ul>
+            </div>
+        </div>  
+        <div class="content">
+            <h1>Lab Management<br><span>Softwares</span> <br>PICT</h1>
+            <p class="par">This is a webapp for sofware management of PICT<br>It simplifies administrative tasks by managing the softwares and PC's ultimately reducing administrative workload.
+                <br> </p>
+
+                <button class="cn"><a href="{{ url_for('login') }}"><b>Login</b></a></button>
+
+                    </div>
+                </div>
+        </div>
+    </div>
+    <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
+</body>
+</html>
+{% endblock %}

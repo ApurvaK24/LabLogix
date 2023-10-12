@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/AboutUs.css') }}">
+</head>
+
+<body>
+    <div class="main">
+    <div class="navbar">
+        <div class="icon">
+            <h2 class="logo">LabLogix</h2>
+        </div>
+
+        <div class="menu">
+            <ul>
+                <li><a href="{{ url_for('home') }}">HOME</a></li>
+                <li><a href="{{ url_for('AboutUs') }}">ABOUT</a></li>
+                <li><a href="#">ACCOUNT</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">LAB MANAGEMENT</a>
+                    <div class="dropdown-content">
+                        <a href="{{ url_for('addLab') }}">Add Lab</a>
+                        <a href="#">Lab Listing</a>
+                        <a href="{{ url_for('addSoftware') }}">Add Software</a>
+                        <a href="#">Software Listing</a>
+                    </div>
+                </li>
+                <li><a href="{{ url_for('login') }}">LOGIN</a></li>
+            </ul>
+        </div>
+    </div> 
+    <div class="center-div">
+        <h1><strong>ABOUT US</strong></h1>
+    </div>
+    
+    <div class="row">
+        <div class="column" >
+            <br><br>
+            <p>About Us: Lab Management Solutions
+
+                Welcome to Lab Management Solutions, where excellence in laboratory operations meets innovative management strategies. We are committed to revolutionizing the way laboratories operate, ensuring efficiency, compliance, and optimal performance in the ever-evolving world of scientific research and development.</p>
+             <br><p>
+                Our Mission:
+                
+                At Lab Management Solutions, our mission is to empower laboratories across various industries with cutting-edge management solutions, enhancing productivity, data integrity, and overall performance. We strive to foster a culture of continuous improvement, enabling our clients to focus on their core research while we handle the complexities of lab management.
+            </p><br>
+            <p>    
+                Our Vision:
+                
+                Our vision is to be a globally recognized leader in lab management, setting the standard for innovative solutions that drive advancements in research and development. We aim to contribute significantly to scientific progress by streamlining lab operations and facilitating seamless collaboration within and across laboratories.</p>
+        </div>
+        <div class="column">
+            <img src="/static/images/abt1.jpg" alt="">
+        </div>
+    </div>
+    <div class="row">
+        <div class="column">
+            <img src="/static/images/abt2.jpg" alt="">
+        </div>
+        <div class="column">
+            <br><br><br>
+            <p> Meet Our Team:
+
+                Our team at Lab Management Solutions comprises dedicated professionals with diverse expertise and a shared passion for enhancing laboratory operations. We are united in our commitment to providing exceptional services and driving innovation in lab management.
+                Explore our team page to learn more about the individuals behind Lab Management Solutions and their contributions to our mission.
+                </p>
+                <br>
+                <p>
+                Contact Us:
+                
+                Have questions or interested in learning more about how Lab Management Solutions can transform your laboratory operations? Contact us today to start a conversation and discover how we can partner with you to optimize your lab's performance and drive scientific advancements. </p>
+        </div>
+        
+    </div>
+</div> 
+</body>
+</html>
