@@ -1,7 +1,7 @@
 from flask import Flask, render_template
-from flask_wtf import FlaskForm
-from wtforms import StringField , SubmitField
-from wtforms.validators import DataRequired
+# from flask_wtf import FlaskForm
+# from wtforms import StringField , SubmitField
+# from wtforms.validators import DataRequired
 
 
 app = Flask(__name__)
@@ -32,3 +32,6 @@ def addLab():
 def addSoftware():
     return render_template("addSoftware.html")
 
+
+if __name__ == "__main__":
+    app.run(debug=True,port=8000)
