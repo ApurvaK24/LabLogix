@@ -32,6 +32,10 @@ def addLab():
 def addSoftware():
     return render_template("addSoftware.html")
 
+@app.route('/LabListing')
+
+def LabListing():
+    return render_template("LabListing.html")
 
 if __name__ == "__main__":
     app.run(debug=True,port=8000)
