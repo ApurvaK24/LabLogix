@@ -33,10 +33,10 @@
               Lab Management
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Add Lab</a></li>
-              <li><a class="dropdown-item" href="#">Lab Listing</a></li>
-              <li><a class="dropdown-item" href="#">Add Software</a></li>
-              <li><a class="dropdown-item" href="#">Software Listing</a></li>
+              <li><a class="dropdown-item" href="{{ url_for('addLab') }}">Add Lab</a></li>
+              <li><a class="dropdown-item" href="{{ url_for('LabListing') }}">Lab Listing</a></li>
+              <li><a class="dropdown-item" href="{{ url_for('addSoftware') }}">Add Software</a></li>
+              <li><a class="dropdown-item" href="{{ url_for('SoftwareListing') }}">Software Listing</a></li>
             </ul>
           </li>
           <li class="nav-item">
