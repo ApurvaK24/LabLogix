@@ -8,7 +8,9 @@
 <link href="{{ url_for('static',filename='css/style.css') }}" rel="stylesheet">
 
 <body>
-  
+  {% if error %}  
+  <p><strong>Message</strong>: {{error}}</p>  
+{% endif %}  
   <div class="hero">
     <div class="form-box">
             <div class="button-box">
@@ -17,20 +19,35 @@
                 <button type="button" class="toggle-btn" onclick="register()">Register</button>
             </div>
             <div class="social-icons">
-                <form id="login" class="input-group">
-                  <input type="text" class="input-field" placeholder="User Id" required>
-                  <input type="password" class="input-field" placeholder="Enter Password" required>
-                  <select class="role-select" required>
+              {% if username %}
+              <h1>Hello {{username}}</h1>
+              {% else %}
+              
+                <form id="login" class="input-group" method="POST" action="">
+                  {{ form.hidden_tag() }}
+
+                  {{form.username(class="input-field")}}
+                  {{form.password(class="input-field")}}
+                  {{form.role(class="role-select")}}
+                  {{form.submit(class="submit-btn")}}
+                  <!-- <input type="text" class="input-field" placeholder="User Id" required> -->
+                  <!-- <input type="password" class="input-field" placeholder="Enter Password" required> -->
+                  <!-- <select class="role-select" required>
                     <option value="" disabled selected>Select Role</option>
                         <option value="admin">Admin</option>
                         <option value="professor">Professor</option>
                         <option value="assistant">Assistant</option>
-                    </select>
-                    <input type="checkbox" class="chech-box" id="remember-password">
-                    <label for="remember-password">Remember Password</label>
-                    <button type="submit" class="submit-btn">Log in</button>
+                    </select> -->
+                    <!-- <input type="checkbox" class="chech-box" id="remember-password">
+                    <label for="remember-password">Remember Password</label> -->
+                    <!-- <button type="submit" class="submit-btn">Log in</button> -->
                   </form>
+                  {% endif %}
                   <form id="register" class="input-group">
+                    <!-- {{form.username(class="input-field")}}
+                    {{form.password(class="input-field")}}
+                    {{form.role(class="role-select")}}
+                    {{form.submit(class="submit-btn")}} -->
                     <input type="text" class="input-field" placeholder="User Id" required>
                     <input type="email" class="input-field" placeholder="Email Id" required>
                     <input type="password" class="input-field" placeholder="Enter Password" required>

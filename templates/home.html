@@ -8,6 +8,13 @@
     <link rel="stylesheet" href="{{ url_for('static',filename='css/home.css') }}">
 </head>
 <body>
+    {% with messages = get_flashed_messages() %}  
+    {% if messages %}  
+          {% for message in messages %}  
+               <p>{{ message }}</p>  
+          {% endfor %}  
+    {% endif %}  
+ {% endwith %}  
     <div class="main">
         <div class="navbar">
             <div class="icon">
@@ -29,7 +36,13 @@
                         </div>
         
                     </li>
+                    {% if session['username'] %}
+                    <h3 style="color: aqua;">Hello {{ session['username'] }}</h3>
+                    <li><a href="{{ url_for('logout') }}">LOGOUT</a></li>
+                    {% else %}
+                    
                     <li><a href="{{ url_for('login') }}">LOGIN</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </div>  
