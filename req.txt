@@ -1,3 +1,8 @@
+alembic==1.5.8
+cffi==1.14.5
+click==7.1.2
+psycopg2==2.9.3
+pycparser==2.20
 
 to create env
 python -m virtualenv env
@@ -27,3 +32,7 @@ pip install flask
    pip install bootstrap-flask
    pip install flask_login
     pip install Werkzeug==2.3.0
+
+    pip install flask-mysql
+
+    pip install -r requirement.txt 
