@@ -85,27 +85,44 @@ def load_user(user_id):
     
 
 class RegisterForm(FlaskForm):
+    fname = StringField(validators=[
+                           InputRequired()], render_kw={"placeholder": "First Name"})
+    lname = StringField(validators=[
+                           InputRequired()], render_kw={"placeholder": " Last Name"})
     username = StringField(validators=[
-                           InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
+                           InputRequired()], render_kw={"placeholder": "Username"})
 
     password = PasswordField(validators=[
-                             InputRequired(), Length(min=8, max=20)], render_kw={"placeholder": "Password"})
+                             InputRequired(), Length(min=3, max=20)], render_kw={"placeholder": "Password"})
+    repassword = PasswordField(validators=[
+                             InputRequired(), Length(min=3, max=20)], render_kw={"placeholder": "Re-enter Password"})
     role = SelectField(u'Select Role', choices=[('Admin', 'Admin'), ('Professor', 'Professor'), ('Assistant', 'Assistant')])
     submit = SubmitField('Register')
 
-    def validate_username(self, username):
+    def validateusername(self):
         # pass
+        username=self.username
         curr= mysql.connect().cursor()
-        curr.execute(f"select * from user where username={username}")
+        curr.execute("select * from user where username='{}'".format(username))
         result = curr.fetchall()
         myuser=OurUser(result)
         curr.close()
         
         if username==myuser.username:
-            raise ValidationError(
-                'That username already exists. Please choose a different one.')
-
-
+            flash("That username already exists. Please choose a different one.")
+            print("That username already exists. Please choose a different one.")
+            # raise ValidationError(
+            #     'That username already exists. Please choose a different one.')
+            return False
+        else:
+            return True
+    def validatesecondpassword(self):
+        # print(self.password.data,self.repassword.data)
+        if(self.password.data==self.repassword.data):
+            return True
+        else:
+            print("Password and repassword not matched")
+            return False
 class LoginForm(FlaskForm):
     username = StringField(validators=[
                            InputRequired()], render_kw={"placeholder": "Username"})
@@ -145,12 +162,16 @@ class OurUser :
             self.user_id = tupp[0][0]
             self.username = tupp[0][1]
             self.password = tupp[0][2]
-            self.role = tupp[0][3]
+            self.fname = tupp[0][3]
+            self.lname = tupp[0][4]
+            self.role = tupp[0][5]
         
         except:
             self.user_id = None
             self.username = None
             self.password = None
+            self.fname = None
+            self.lname =None
             self.role = None
             
 
@@ -181,7 +202,10 @@ def login():
                 # error="Logiin sucess"
                 # flash("you are successfuly logged in")  
                 curr.close()
+                session['id'] = myuser.user_id
                 session['username'] = myuser.username
+                session['fname']=myuser.fname
+                session['lname']=myuser.lname
                 return redirect(url_for('home'))
             else:
                 curr.close()
@@ -195,17 +219,53 @@ def login():
 
 
 
+
+@app.route('/Register', methods=['GET', 'POST'])
+def Register():
+    if (session ):
+        if(session['username'] !=None):
+            #show message user is loged in already
+            flash("You are logged in already") 
+            print("You are logged in already") 
+            return redirect(url_for('home'))
+    curr= mysql.connect().cursor()
+    form=RegisterForm()
+    if form.validate_on_submit():
+        curr= mysql.connect().cursor()
+        fname=form.fname.data
+        lname=form.lname.data
+        username=form.username.data
+        password=form.password.data
+        repassword=form.repassword.data
+        roleselected=form.role.data
+        if(form.validateusername() and form.validatesecondpassword()):
+            hashed_password = bcrypt.generate_password_hash(password)
+            print(fname,lname,username,password,repassword,roleselected)
+            curr.execute("INSERT INTO user (username,password,fname,lname,role) VALUES (%s, %s, %s , %s, %s)", (username, hashed_password, fname, lname,  roleselected))
+            mysql.connection.commit()
+            curr.close()
+            # curr.execute("select * from user where username='{}'".format(username))
+            # result = curr.fetchall()
+            # myuser=OurUser(result)
+            flash("User registered, Continue Login")
+            return redirect(url_for('login'))
+            
+        pass
+    return render_template("Register.html", form=form)
+
+def clearsessions():
+    session['id'] = None
+    session['username'] = None
+    session['fname']=None
+    session['lname']=None
+
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
-    session.clear()
-
-    return 'Logged out successfully'
-
-@app.route('/Register')
-def Register():
-    return render_template("Register.html")
+    clearsessions()
+    flash("Logged out successfully")
+    return render_template("home.html")
 
 
 @app.route('/AboutUs')
@@ -244,9 +304,15 @@ def SoftwareListing():
     return render_template("SoftwareListing.html")
 
 @app.route('/myaccount')
-
+@login_required
 def myaccount():
-    return render_template("myaccount.html")
+    id=session['id']
+    curr= mysql.connect().cursor()
+    curr.execute("select * from user where id='{}'".format(id))
+    result = curr.fetchall()
+    myuser=OurUser(result)
+    curr.close()
+    return render_template("myaccount.html",myuser=myuser)
 
 if __name__ == "__main__":
     app.run(debug=True,port=8000)

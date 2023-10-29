@@ -9,18 +9,32 @@
 </head>
 
 <body>
-
+    {% with messages = get_flashed_messages() %}  
+    {% if messages %}  
+          {% for message in messages %}  
+               <p>{{ message }}</p>  
+          {% endfor %}  
+    {% endif %}  
+ {% endwith %}  
     <div class="hero">
         <div class="form-box">
             <div class="button-box">
                 <div id="btn"></div>
 
-                <button type="button" class="toggle-btn" onclick="register()">Register</button>
+                <button type="button" class="toggle-btn" >Register</button>
             </div>
             <div class="social-icons">
           
-                <form id="register" class="input-group">
-                    <input type="text" class="input-field" placeholder="User Id" required>
+                <form id="register" class="input-group" method="POST" action="">
+                    {{ form.hidden_tag() }}
+                    {{form.fname(class="input-field")}}
+                    {{form.lname(class="input-field")}}
+                    {{form.username(class="input-field")}}
+                    {{form.password(class="input-field")}}
+                    {{form.repassword(class="input-field")}}
+                    {{form.role(class="role-select")}}
+                    {{form.submit(class="submit-btn")}}
+                    <!-- <input type="text" class="input-field" placeholder="Name" required>
                     <input type="email" class="input-field" placeholder="Email Id" required>
                     <input type="password" class="input-field" placeholder="Enter Password" required>
                     <select class="role-select" required>
@@ -31,20 +45,16 @@
                     </select>
                     <input type="checkbox" class="chech-box" id="agree-terms">
                     <label for="agree-terms">I agree to the terms & conditions</label>
-                    <button type="submit" class="submit-btn">Register</button>
+                    <button type="submit" class="submit-btn">Register</button> -->
                 </form>
             </div>
         </div>
     </div>
-
-    <script>
-
-        var y = document.getElementById("register");
-
-        function register() {
-            y.style.left = "50px";
-        }
-    </script>
+<script>
+    var y = document.getElementById("register");
+    y.style.left = "50px";
+</script>
+    
 
 </body>
 

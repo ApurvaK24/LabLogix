@@ -37,7 +37,7 @@
         
                     </li>
                     {% if session['username'] %}
-                    <h3 style="color: aqua;">Hello {{ session['username'] }}</h3>
+                    <h3 style="color: aqua;">Hello {{ session['fname'] }}</h3>
                     <li><a href="{{ url_for('logout') }}">LOGOUT</a></li>
                     {% else %}
                     
