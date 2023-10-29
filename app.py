@@ -221,10 +221,25 @@ def addSoftware():
 def LabListing():
     return render_template("LabListing.html")
 
+@app.route('/labdetails')
+
+def labdetails():
+    return render_template("labdetails.html")
+
+@app.route('/softwaredetails')
+
+def softwaredetails():
+    return render_template("softwaredetails.html")
+
 @app.route('/SoftwareListing')
 
 def SoftwareListing():
     return render_template("SoftwareListing.html")
+
+@app.route('/myaccount')
+
+def myaccount():
+    return render_template("myaccount.html")
 
 if __name__ == "__main__":
     app.run(debug=True,port=8000)
