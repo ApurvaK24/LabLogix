@@ -142,6 +142,13 @@ input::placeholder{
     </style>
 </head>
 <body>
+    {% with messages = get_flashed_messages() %}  
+    {% if messages %}  
+          {% for message in messages %}  
+               <p>{{ message }}</p>  
+          {% endfor %}  
+    {% endif %}  
+ {% endwith %}  
     <div class="hero">
         <div class="form-box">
             <div class="button-box">
@@ -150,8 +157,16 @@ input::placeholder{
                
             </div>
             <div class="social-icons">
-                <form id="login" class="input-group">
-                    <input type="text" class="input-field" placeholder="Enter Lab Name" required>
+                <form id="login" class="input-group" method="POST" action="">
+                    {{ form.hidden_tag() }}
+
+                    {{form.labname(class="input-field")}}
+                    {{form.labmanager(class="input-field")}}
+                    {{form.lab_location(class="input-field")}}
+                    {{form.description(class="input-field")}}
+                    {{form.no_of_pc(type="number",class="input-field")}}
+                    {{form.submit(class="submit-btn")}}
+                    <!-- <input type="text" class="input-field" placeholder="Enter Lab Name" required>
                     <input type="password" class="input-field" placeholder="Enter Lab Manager" required>
                     <input type="text" class="input-field" placeholder="Enter Lab Location" required>
                     <input type="text" class="input-field" placeholder="Enter Software Names" required>
@@ -164,7 +179,7 @@ input::placeholder{
                         <option value="assistant">Assistant</option>
                     </select>
                     <br>
-                    <button type="submit" class="submit-btn">SUBMIT</button>
+                    <button type="submit" class="submit-btn">SUBMIT</button> -->
                 </form>
                
             </div>

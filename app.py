@@ -17,7 +17,7 @@ from flask import Flask, flash, render_template,session, url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
-from wtforms import SelectField, StringField, PasswordField, SubmitField
+from wtforms import DateField, DecimalField, IntegerField, SelectField, StringField, PasswordField, SubmitField, TextAreaField
 from wtforms.validators import InputRequired, Length, ValidationError
 from flask_mysqldb import MySQL
 from flask_bcrypt import Bcrypt
@@ -135,6 +135,40 @@ class LoginForm(FlaskForm):
     role = SelectField(u'Select Role', choices=[('Admin', 'Admin'), ('Professor', 'Professor'), ('Assistant', 'Assistant')])
 
     submit = SubmitField('Submit')
+
+class addLabForm(FlaskForm):
+    labname = StringField(validators=[
+                           InputRequired()], render_kw={"placeholder": "Enter Lab Name"})
+    labmanager = StringField(validators=[
+                           InputRequired()], render_kw={"placeholder": "Enter Lab Manager"})
+    lab_location = StringField(validators=[
+                           InputRequired()], render_kw={"placeholder": "Enter Lab Location"})
+    description = TextAreaField(render_kw={"placeholder": "Enter Lab description"})
+    # username = StringField(validators=[
+    #                        InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
+
+    no_of_pc = IntegerField(render_kw={"placeholder": "Enter Number of PC's"})
+
+    submit = SubmitField('Submit')
+class addSoftwareForm(FlaskForm):
+    software_name = StringField(validators=[
+                           InputRequired()], render_kw={"placeholder": "Enter Software Name"})
+    lab_name = StringField(validators=[
+                           InputRequired()], render_kw={"placeholder": "Enter Lab Name"})
+
+    software_manager = StringField(validators=[
+                           InputRequired()], render_kw={"placeholder": "Enter Software Manager Name"})
+    software_key = StringField(validators=[
+                           InputRequired()], render_kw={"placeholder": "Enter Software Key"})
+    
+    cost = DecimalField(validators=[
+                           InputRequired()],render_kw={"placeholder": "Enter Software Cost "})
+    availability = IntegerField(validators=[
+                           InputRequired()],render_kw={"placeholder": "Enter Software Availability"})
+    valid_up_to = DateField(format='%Y-%m-%d')
+
+    submit = SubmitField('Submit')
+
 
 
 @app.route('/')
@@ -273,15 +307,21 @@ def logout():
 def AboutUs(): 
     return render_template("AboutUs.html")
 
-@app.route('/addLab')
-@login_required
+@app.route('/addLab', methods=['GET', 'POST'])
+# @login_required
 def addLab():
-    return render_template("addLab.html")
+    form = addLabForm()
+    if form.validate_on_submit():
+        print(form.labname.data,form.description.data,form.no_of_pc.data)
+    return render_template("addLab.html",form=form)
 
-@app.route('/addSoftware')
+@app.route('/addSoftware', methods=['GET', 'POST'])
 
 def addSoftware():
-    return render_template("addSoftware.html")
+    form=addSoftwareForm()
+    if form.validate_on_submit():
+        print(form.software_name.data,form.cost.data,form.valid_up_to.data)
+    return render_template("addSoftware.html",form=form)
 
 @app.route('/LabListing')
 
