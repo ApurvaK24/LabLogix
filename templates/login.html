@@ -17,8 +17,7 @@
             <div class="button-box">
                 <div id="btn"></div>
                 <button type="button" class="toggle-btn" onclick="login()">Log In</button>
-                <!-- Remove the register button -->
-                <!-- <button type="button" class="toggle-btn" onclick="register()">Register</button> -->
+
             </div>
             <div class="social-icons">
                 {% if username %}
@@ -34,8 +33,6 @@
                     {{form.submit(class="submit-btn")}}
                 </form>
                 {% endif %}
-                <!-- Remove the register form -->
-                <!-- <form id="register" class="input-group"> ... </form> -->
             </div>
         </div>
     </div>
@@ -45,13 +42,9 @@
         var y = document.getElementById("register");
         var z = document.getElementById("btn");
 
-        // Remove the register-related JavaScript function and its calls
-        // function register() { ... }
-
         function login() {
-            // Remove the register-related JavaScript code
+
             x.style.left = "50px";
-            // y.style.left = "450px";
             z.style.left = "0";
         }
     </script>
