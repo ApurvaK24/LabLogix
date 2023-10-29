@@ -75,6 +75,7 @@ ul li a {
     font-family: Arial;
     font-weight: bold;
     transition: 0.4s ease-in-out;
+    text-align: center;
     display: block;
     padding: 10px 15px;
 }
