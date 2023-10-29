@@ -98,7 +98,6 @@ ul li a:hover {
     z-index: 1;
     min-width: 160px;
     border-radius: 5px;
-    margin-top: 10px;
 }
 
 .dropdown-content a {
