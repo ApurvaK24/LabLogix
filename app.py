@@ -193,6 +193,8 @@ def login():
      
     # return render_template("login.html")
 
+
+
 @app.route('/logout')
 @login_required
 def logout():
@@ -200,6 +202,11 @@ def logout():
     session.clear()
 
     return 'Logged out successfully'
+
+@app.route('/Register')
+def Register():
+    return render_template("Register.html")
+
 
 @app.route('/AboutUs')
 
