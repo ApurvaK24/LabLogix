@@ -40,7 +40,9 @@
                 This is a longer card with supporting text below as a natural lead-in to
                 additional content. This content is a little bit longer.
               </p>
-              <a href="{{ url_for('labdetails') }}" class="btn btn-primary">View Details</a>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                View Details
+              </button>
             </div>
           </div>
         </div>
@@ -54,7 +56,9 @@
                 This is a longer card with supporting text below as a natural lead-in to
                 additional content. This content is a little bit longer.
               </p>
-              <a href="{{ url_for('labdetails') }}"  class="btn btn-primary">View Details</a>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                View Details
+              </button>
             </div>
           </div>
         </div>
@@ -66,7 +70,9 @@
               <h5 class="card-title">LP Lab</h5>
               <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
                 additional content.his content is a little bit longer.</p>
-                <a href="{{ url_for('labdetails') }}"  class="btn btn-primary">View Details</a>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  View Details
+                </button>
             </div>
           </div>
         </div>
@@ -82,7 +88,9 @@
                 This is a longer card with supporting text below as a natural lead-in to
                 additional content.his content is a little bit longer.
               </p>
-              <a href="{{ url_for('labdetails') }}"  class="btn btn-primary">View Details</a>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                View Details
+              </button>
             </div>
           </div>
         </div>
@@ -96,7 +104,9 @@
                 This is a longer card with supporting text below as a natural lead-in to
                 additional content. This content is a little bit longer.
               </p>
-              <a href="{{ url_for('labdetails') }}"  class="btn btn-primary">View Details</a>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                View Details
+              </button>
             </div>
           </div>
         </div>
@@ -110,10 +120,55 @@
                 This is a longer card with supporting text below as a natural lead-in to
                 additional content. This content is a little bit longer.
               </p>
-              <a href="{{ url_for('labdetails') }}"  class="btn btn-primary">View Details</a>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                View Details
+              </button>
             </div>
           </div>
         </div>
+       
+        
+       
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2 class="modal-title fs-5" id="exampleModalLabel"><b>LAB NAME</b></h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="centered-content">
+                <!-- Lab Details Section -->
+                <div class="lab-details-container">
+                  <div class="lab-details">
+                    
+                    <table class="table">
+                      <tr>
+                        <th>Description</th>
+                        <td>Description of the lab. It is a networking lab used for performing networking experiments and research.</td>
+                      </tr>
+                      <tr>
+                        <th>Location</th>
+                        <td>A1-203</td>
+                      </tr>
+                      <tr>
+                        <th>Software Used</th>
+                        <td>Cisco Packet Tracer</td>
+                      </tr>
+                      <tr>
+                        <th>Lab Manager</th>
+                        <td>Mansi</td>
+                      </tr>
+                      <tr>
+                        <th>Number of PCs</th>
+                        <td>25</td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
       
 </body>
 </html>

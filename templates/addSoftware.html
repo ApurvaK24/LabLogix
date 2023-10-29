@@ -22,7 +22,7 @@
 
 .form-box {
     width: 480px;
-    height: 580px;
+    height: 680px;
     position: relative;
     margin: 3% auto;
     background: rgb(23, 20, 20);
@@ -174,16 +174,17 @@ input::placeholder{
             </div>
             <div class="social-icons">
                 <form id="login" class="input-group">
+                    <input type="text" class="input-field" placeholder="Enter Software Name" required>
                     <input type="text" class="input-field" placeholder="Enter Lab Name" required>
                     <input type="password" class="input-field" placeholder="Enter Software Manager" required>
                     <input type="text" class="input-field" placeholder="Enter Software ID" required>
-                    
+                    <input type=" number" class="input-field" placeholder="Enter Software Cost" required>
+                    <input type="number" class="input-field" placeholder="Enter Software Availability" required>
                     <label class="new">From: 
                     <input type="date" class="date1" placeholder="From" required></label>
                     <label class="new">   To:   
                         <input type="date" class="date" placeholder="From" required></label>
                         
-                    
                     <br>
                     <button type="submit" class="submit-btn">SUBMIT</button>
                 </form>
