@@ -187,8 +187,8 @@ input::placeholder{
                     {{form.lab_name(class="input-field")}}
                     {{form.software_manager(class="input-field")}}
                     {{form.software_key(class="input-field")}}
-                    {{form.cost(type="number",class="input-field")}}
-                    {{form.availability(type="number", class="input-field")}}
+                    {{form.cost(type="number",min="0",class="input-field")}}
+                    {{form.availability(type="number",min="0", class="input-field")}}
                     {{form.valid_up_to(type="date" ,class="date1")}}
                     {{form.submit(class="submit-btn")}}
                     <!-- <input type="text" class="input-field" placeholder="Enter Software Name" required>

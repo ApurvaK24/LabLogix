@@ -164,8 +164,15 @@ input::placeholder{
                     {{form.labmanager(class="input-field")}}
                     {{form.lab_location(class="input-field")}}
                     {{form.description(class="input-field")}}
-                    {{form.no_of_pc(type="number",class="input-field")}}
+                    {{form.no_of_pc(type="number",min="0",class="input-field")}}
+                    <br>
+                    <p style="color: red;">{{warning}}</p>
+                    {% if able %}  
+                        
                     {{form.submit(class="submit-btn")}}
+                    {% else %}  
+                    {{form.submit(class="submit-btn , disabled=true")}}
+                    {% endif %}  
                     <!-- <input type="text" class="input-field" placeholder="Enter Lab Name" required>
                     <input type="password" class="input-field" placeholder="Enter Lab Manager" required>
                     <input type="text" class="input-field" placeholder="Enter Lab Location" required>

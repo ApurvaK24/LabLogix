@@ -308,12 +308,40 @@ def AboutUs():
     return render_template("AboutUs.html")
 
 @app.route('/addLab', methods=['GET', 'POST'])
-# @login_required
+@login_required
 def addLab():
+    curr= mysql.connect().cursor()
+
     form = addLabForm()
+    warning=""
+    able=True
+    id=session['id']
+    curr.execute("select * from user where id={}".format(id))
+    result = curr.fetchall()
+    myuser=OurUser(result)
+
+    if myuser.role=="Admin":
+        warning=" "
+        able=True
+    else:
+        warning="Only admin can add Lab"
+        able=False
     if form.validate_on_submit():
-        print(form.labname.data,form.description.data,form.no_of_pc.data)
-    return render_template("addLab.html",form=form)
+        if able:
+            curr= mysql.connect().cursor()
+            labname=form.labname.data
+            labmanager=form.labmanager.data
+            lab_location=form.fname.data
+            description=form.description.data
+            no_of_pc=form.no_of_pc.data
+            curr.execute("INSERT INTO lablisting (labname,labmanager,lab_location,description,no_of_pc) VALUES (%s, %s, %s , %s, %s)", (labname,labmanager,lab_location,description,no_of_pc))
+            mysql.connection.commit()
+            print(form.labname.data,form.description.data,form.no_of_pc.data)
+            curr.close()
+            warning="Lab Added Successfully"
+            flash("Lab Added Successfully")
+            return redirect(url_for('LabListing'))
+    return render_template("addLab.html",form=form,warning=warning,able=able)
 
 @app.route('/addSoftware', methods=['GET', 'POST'])
 
