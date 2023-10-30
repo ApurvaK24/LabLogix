@@ -187,7 +187,8 @@ class addSoftwareForm(FlaskForm):
 @app.route('/')
 def home():
     
-    curr= mysql.connect().cursor()
+    
+    
     return render_template("home.html")
 
 
@@ -441,7 +442,21 @@ def addSoftware():
             conn.commit()
             print(form.software_name.data,form.cost.data,form.valid_up_to.data)
             curr.close()
+            flash("Software added successfully")
     return render_template("addSoftware.html",form=form,warning=warning,able=able)
+
+@app.route('/LabListing/delete/<int:id>')
+def delete_lab(id):
+    conn = mysql.connect()
+    curr= conn.cursor()
+    curr.execute("delete from lablisting where lab_id = %s",id)
+    # result = curr.fetchall()
+    # print(result)
+    conn.commit()
+    # print(id)
+    print("Lab deleted")
+    curr.close()
+    return redirect(url_for('LabListing'))
 
 @app.route('/LabListing')
 
@@ -469,6 +484,19 @@ def labdetails():
 def softwaredetails():
     return render_template("softwaredetails.html")
 
+@app.route('/SoftwareListing/delete/<int:id>')
+def delete_software(id):
+    conn = mysql.connect()
+    curr= conn.cursor()
+    curr.execute("delete from softwarelisting where software_id = %s",id)
+    # result = curr.fetchall()
+    # print(result)
+    conn.commit()
+    # print(id)
+    print("Software deleted")
+    curr.close()
+    return redirect(url_for('SoftwareListing'))
+
 @app.route('/SoftwareListing')
 
 def SoftwareListing():
@@ -481,7 +509,7 @@ def SoftwareListing():
     for r in result:
         mysoft=OurSoftware(r)
         # print(mylab.labname)
-        # print(r,"\n")
+        print(r,"\n")
         softlist.append(mysoft)
     # print(lablist[1].labname)
     return render_template("SoftwareListing.html",softlist=softlist)

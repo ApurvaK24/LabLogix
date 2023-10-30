@@ -1,8 +1,10 @@
-{% block content %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Login And Registration Form - Easy Tutorials</title>
+    <title>Webpage Design</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/home.css') }}">
+</head>
+<body>
     <style>
         * {
     margin: 0;
@@ -16,7 +18,7 @@
     background-color: #fff;
     background-position: center;
     background-size: cover;
-    position: absolute;
+    position: relative;
 }
 
 .form-box {
@@ -140,8 +142,7 @@ input::placeholder{
     color: #fff;
 }
     </style>
-</head>
-<body>
+
     {% with messages = get_flashed_messages() %}  
     {% if messages %}  
           {% for message in messages %}  
@@ -210,6 +211,6 @@ input::placeholder{
             z.style.left = "0";
         }
     </script>
+
 </body>
 </html>
-{% endblock %}

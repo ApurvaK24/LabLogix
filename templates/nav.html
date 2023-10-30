@@ -1,23 +1,5 @@
 
-{% block content %}
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Webpage Design</title>
-    <link rel="stylesheet" href="{{ url_for('static',filename='css/home.css') }}">
-</head>
-<body>
-    {% with messages = get_flashed_messages() %}  
-    {% if messages %}  
-          {% for message in messages %}  
-               <p>{{ message }}</p>  
-          {% endfor %}  
-    {% endif %}  
- {% endwith %}  
-    <div class="main">
-        
-<div class="navbar">
+<div class="navbar" style="background-color: black;">
     <div class="icon">
         <h2 class="logo">LabLogix</h2>
     </div>
@@ -48,19 +30,3 @@
         </ul>
     </div>
 </div>  
-
-        <div class="content">
-            <h1>Lab Management<br><span>Softwares</span> <br>PICT</h1>
-            <p class="par">This is a webapp for sofware management of PICT<br>It simplifies administrative tasks by managing the softwares and PC's ultimately reducing administrative workload.
-                <br> </p>
-
-                <button class="cn"><a href="{{ url_for('login') }}"><b>Login</b></a></button>
-
-                    </div>
-                </div>
-        </div>
-    </div>
-    <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
-</body>
-</html>
-{% endblock %}
