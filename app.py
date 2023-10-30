@@ -136,6 +136,19 @@ class LoginForm(FlaskForm):
 
     submit = SubmitField('Submit')
 
+# class deleteForm(FlaskForm):
+#     id = ntegerField(validators=[InputRequired()])
+#     labmanager = StringField(validators=[
+#                            InputRequired()], render_kw={"placeholder": "Enter Lab Manager"})
+#     lab_location = StringField(validators=[
+#                            InputRequired()], render_kw={"placeholder": "Enter Lab Location"})
+#     description = TextAreaField(render_kw={"placeholder": "Enter Lab description"})
+#     # username = StringField(validators=[
+#     #                        InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
+
+#     no_of_pc = IntegerField(render_kw={"placeholder": "Enter Number of PC's"})
+
+#     submit = SubmitField('Submit')
 class addLabForm(FlaskForm):
     labname = StringField(validators=[
                            InputRequired()], render_kw={"placeholder": "Enter Lab Name"})
@@ -207,6 +220,27 @@ class OurLab :
             self.lab_location = None
             self.description =None
             self.no_of_pc =  None
+class OurSoftware :
+    def __init__(self, tupp):
+        try:
+            self.software_id = tupp[0]
+            self.software_name = tupp[1]
+            self.lab_name = tupp[2]
+            self.software_manager = tupp[3]
+            self.software_key = tupp[4]
+            self.cost = tupp[5]
+            self.availability = tupp[6]
+            self.valid_up_to = tupp[7]
+        
+        except:
+            self.software_id = None
+            self.software_name = None
+            self.lab_name = None
+            self.software_manager= None
+            self.software_key= None
+            self.cost= None
+            self.availability= None
+            self.valid_up_to = None
 class OurUser :
     def __init__(self, tupp):
         try:
@@ -393,7 +427,20 @@ def addSoftware():
         warning="Only admin,Professor can add Lab"
         able=False
     if form.validate_on_submit():
-        print(form.software_name.data,form.cost.data,form.valid_up_to.data)
+        if able:
+            conn = mysql.connect()
+            curr= conn.cursor()
+            software_name=form.software_name.data
+            lab_name=form.lab_name.data
+            software_manager=form.software_manager.data
+            software_key=form.software_key.data
+            cost=form.cost.data
+            availability=form.availability.data
+            valid_up_to=form.valid_up_to.data
+            curr.execute("INSERT INTO softwarelisting (software_name,lab_name,software_manager,software_key,cost,availability,valid_up_to) VALUES (%s, %s, %s , %s, %s, %s, %s)", (software_name,lab_name,software_manager,software_key,cost,availability,valid_up_to))
+            conn.commit()
+            print(form.software_name.data,form.cost.data,form.valid_up_to.data)
+            curr.close()
     return render_template("addSoftware.html",form=form,warning=warning,able=able)
 
 @app.route('/LabListing')
@@ -426,8 +473,18 @@ def softwaredetails():
 
 def SoftwareListing():
     flash("")
-
-    return render_template("SoftwareListing.html")
+    conn = mysql.connect()
+    curr= conn.cursor()
+    curr.execute("select * from softwarelisting ")
+    result = curr.fetchall()
+    softlist=[]
+    for r in result:
+        mysoft=OurSoftware(r)
+        # print(mylab.labname)
+        # print(r,"\n")
+        softlist.append(mysoft)
+    # print(lablist[1].labname)
+    return render_template("SoftwareListing.html",softlist=softlist)
 
 @app.route('/myaccount')
 @login_required

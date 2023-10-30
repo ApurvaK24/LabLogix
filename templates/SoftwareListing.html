@@ -22,6 +22,54 @@
 
 </head>
 <body>
+  {% for i in softlist %}
+  {% set stri="soft"+i.software_id|string %}
+  {% set label="soft"+i.software_id|string + "Label" %}
+  <div class="modal fade" id="{{stri}}" tabindex="-1" aria-labelledby="{{stri}}" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title fs-5" id="exampleModalLabel"><b>{{i.software_name}}</b></h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="centered-content">
+          <!-- Lab Details Section -->
+          <div class="lab-details-container">
+            <div class="lab-details">
+              
+              <table class="table">
+                <tr>
+                  <th>Lab Name</th>
+                  <td>{{i.lab_name}}</tr>
+                </tr>
+                <tr>
+                  <th>Software Manager</th>
+                  <td>{{i.software_manager}}</td>
+                </tr>
+                <tr>
+                  <th>Software id</th>
+                  <td>{{i.software_key}}</td>
+                </tr>
+                <tr>
+                  <th>Software_validity</th>
+                  <td>{{i.valid_up_to}}</td>
+                </tr>
+                <tr>
+                  <th>Cost</th>
+                  <td>{{i.cost}}</td>
+                </tr>
+                <tr>
+                  <th>Availability</th>
+                  <td>{{i.availability}}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        {% endfor %}
     <div class="card mb-3 text-center">
         <img class="card-img-top" src="/static/images/softwrare1.jpg" height="400px"  alt="Card image cap"> 
         <div class="text-container">
@@ -46,22 +94,27 @@
             </div>
           </div>
         </div>
+
+        {% for i in softlist %}
         <div class="col-4">
           <div class="card">
-            <img src="/static/images/cisco.jpg"  height="200px" class="card-img-top"
-              alt="Palm Springs Road" />
+           
             <div class="card-body">
-              <h5 class="card-title">Cisco Packet Tracer</h5>
-              <p class="card-text">
-                This is a longer card with supporting text below as a natural lead-in to
-                additional content. This content is a little bit longer.
-              </p>
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              <h5 class="card-title">{{i.software_name}}</h5>
+              <p class="card-text">Lab: {{i.lab_name}}</p>
+              <p class="card-text">Software validity: {{i.valid_up_to}}</p>
+              <!-- <p class="card-text">Software availability: {{i.availability}}</p> -->
+              
+              {% set stri="#"+"soft"+i.software_id|string %}
+
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="{{stri}}">
                 View Details
               </button>
             </div>
           </div>
         </div>
+        {% endfor %}
+
         <div class="col-4">
           <div class="card">
             <img src="/static/images/window.jpg"  height="200px" class="card-img-top"
@@ -107,6 +160,7 @@
               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 View Details
               </button>
+              
             </div>
           </div>
         </div>
