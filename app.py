@@ -182,7 +182,7 @@ def home():
 # curr= mysql.connect().cursor()
 #     # curr.execute("create table user(id int primary key auto_increment,username varchar(100) not null, password varchar(100), role varchar(100) )")
 #     curr.execute("insert into user (username,password,role) values ('atharvak','abcd','Admin')")
-#     mysql.connection.commit()
+#     conn.commit()
 #     curr.execute("show tables")
 #     result = curr.fetchall()
 #     print(result)
@@ -190,6 +190,23 @@ def home():
 # --------------------------------------------
 
 
+class OurLab :
+    def __init__(self, tupp):
+        try:
+            self.lab_id = tupp[0]
+            self.labname = tupp[1]
+            self.labmanager = tupp[2]
+            self.lab_location = tupp[3]
+            self.description = tupp[4]
+            self.no_of_pc = tupp[5]
+        
+        except:
+            self.lab_id =  None
+            self.labname = None
+            self.labmanager =None
+            self.lab_location = None
+            self.description =None
+            self.no_of_pc =  None
 class OurUser :
     def __init__(self, tupp):
         try:
@@ -219,7 +236,7 @@ def login():
     if form.validate_on_submit():
         curr= mysql.connect().cursor()
         username=form.username.data
-        # print("Validation button ck",username)
+        print("Validation button ck",username)
         # user = User.query.filter_by(username=form.username.data).first()
         curr.execute("select * from user where username='{}'".format(username))
         result = curr.fetchall()
@@ -262,10 +279,12 @@ def Register():
             flash("You are logged in already") 
             print("You are logged in already") 
             return redirect(url_for('home'))
-    curr= mysql.connect().cursor()
+    conn = mysql.connect()
+    curr= conn.cursor()
     form=RegisterForm()
     if form.validate_on_submit():
-        curr= mysql.connect().cursor()
+        conn = mysql.connect()
+        curr= conn.cursor()
         fname=form.fname.data
         lname=form.lname.data
         username=form.username.data
@@ -276,10 +295,13 @@ def Register():
             hashed_password = bcrypt.generate_password_hash(password)
             print(fname,lname,username,password,repassword,roleselected)
             curr.execute("INSERT INTO user (username,password,fname,lname,role) VALUES (%s, %s, %s , %s, %s)", (username, hashed_password, fname, lname,  roleselected))
-            mysql.connection.commit()
+            conn.commit()
             curr.close()
-            # curr.execute("select * from user where username='{}'".format(username))
+            # conn = mysql.connect()
+            # curr= conn.cursor()
+            # curr.execute("select * from user ".format(username))
             # result = curr.fetchall()
+            # print(result)
             # myuser=OurUser(result)
             flash("User registered, Continue Login")
             return redirect(url_for('login'))
@@ -310,8 +332,10 @@ def AboutUs():
 @app.route('/addLab', methods=['GET', 'POST'])
 @login_required
 def addLab():
-    curr= mysql.connect().cursor()
+    flash("")
 
+    conn = mysql.connect()
+    curr= conn.cursor()
     form = addLabForm()
     warning=""
     able=True
@@ -328,33 +352,65 @@ def addLab():
         able=False
     if form.validate_on_submit():
         if able:
-            curr= mysql.connect().cursor()
+            conn = mysql.connect()
+            curr= conn.cursor()
             labname=form.labname.data
             labmanager=form.labmanager.data
-            lab_location=form.fname.data
+            lab_location=form.lab_location.data
             description=form.description.data
             no_of_pc=form.no_of_pc.data
             curr.execute("INSERT INTO lablisting (labname,labmanager,lab_location,description,no_of_pc) VALUES (%s, %s, %s , %s, %s)", (labname,labmanager,lab_location,description,no_of_pc))
-            mysql.connection.commit()
+            conn.commit()
             print(form.labname.data,form.description.data,form.no_of_pc.data)
             curr.close()
             warning="Lab Added Successfully"
             flash("Lab Added Successfully")
+            print("Lab Added Successfully")
             return redirect(url_for('LabListing'))
+        else:
+            flash(warning)
     return render_template("addLab.html",form=form,warning=warning,able=able)
 
 @app.route('/addSoftware', methods=['GET', 'POST'])
+@login_required
 
 def addSoftware():
+    flash("")
+    conn = mysql.connect()
+    curr= conn.cursor()
     form=addSoftwareForm()
+    id=session['id']
+    warning=""
+    able=True
+    curr.execute("select * from user where id={}".format(id))
+    result = curr.fetchall()
+    myuser=OurUser(result)
+
+    if myuser.role=="Admin" or myuser.role=="Professor":
+        warning=" "
+        able=True
+    else:
+        warning="Only admin,Professor can add Lab"
+        able=False
     if form.validate_on_submit():
         print(form.software_name.data,form.cost.data,form.valid_up_to.data)
-    return render_template("addSoftware.html",form=form)
+    return render_template("addSoftware.html",form=form,warning=warning,able=able)
 
 @app.route('/LabListing')
 
 def LabListing():
-    return render_template("LabListing.html")
+    flash("")
+    conn = mysql.connect()
+    curr= conn.cursor()
+    curr.execute("select * from lablisting ")
+    result = curr.fetchall()
+    lablist=[]
+    for r in result:
+        mylab=OurLab(r)
+        # print(mylab.labname)
+        lablist.append(mylab)
+    # print(lablist[1].labname)
+    return render_template("LabListing.html",lablist=lablist)
 
 @app.route('/labdetails')
 
@@ -369,6 +425,8 @@ def softwaredetails():
 @app.route('/SoftwareListing')
 
 def SoftwareListing():
+    flash("")
+
     return render_template("SoftwareListing.html")
 
 @app.route('/myaccount')

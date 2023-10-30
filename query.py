@@ -2,6 +2,7 @@
 # pip install flask-mysql
 from flaskext.mysql import MySQL
 from flask import Flask, flash, render_template,session, url_for, redirect
+from flask_bcrypt import Bcrypt
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "Shooo!This is secretkey"
@@ -14,15 +15,23 @@ mysql = MySQL()
 
 mysql.init_app(app)
 
+bcrypt = Bcrypt(app)
 
-curr= mysql.connect().cursor()
+conn = mysql.connect()
+curr= conn.cursor()
+
+
+hashed_password = bcrypt.generate_password_hash("qwerty")
+curr.execute("INSERT INTO user (username,password,fname,lname,role) VALUES (%s, %s, %s , %s, %s)", ("tanishkalimkar", hashed_password, "Tanishka", "Limkar", "Professor"))
+conn.commit()
+print("Done")
 
 
 # curr.execute("INSERT INTO user (username,password,fname,lname,role) VALUES (%s, %s, %s , %s, %s)", (username, hashed_password, fname, lname,  roleselected))
-# mysql.connection.commit()
+# conn.commit()
 
 
-curr.execute("select * from user where username = %s", ("Ak"))
+curr.execute("select * from user ")
 result = curr.fetchall()
 print(result)
 

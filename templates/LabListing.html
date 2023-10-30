@@ -22,6 +22,50 @@
 
 </head>
 <body>
+  {% for i in lablist %}
+  {% set stri="lab"+i.lab_id|string %}
+  {% set label="lab"+i.lab_id|string + "Label" %}
+        <div class="modal fade" id= "{{stri}}" tabindex="-1" aria-labelledby="{{stri}}" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2 class="modal-title fs-5" ><b>{{i.labname}}</b></h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="centered-content">
+                <!-- Lab Details Section -->
+                <div class="lab-details-container">
+                  <div class="lab-details">
+                    
+                    <table class="table">
+                      <tr>
+                        <th>Description</th>
+                        <td>{{i.description}}</td>
+                      </tr>
+                      <tr>
+                        <th>Location</th>
+                        <td>{{i.lab_location}}</td>
+                      </tr>
+                      <tr>
+                        <th>Software Used</th>
+                        <td>None</td>
+                      </tr>
+                      <tr>
+                        <th>Lab Manager</th>
+                        <td>{{i.labmanager}}</td>
+                      </tr>
+                      <tr>
+                        <th>Number of PCs</th>
+                        <td>{{i.no_of_pc}}</td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+          {% endfor %}
     <div class="card mb-3 text-center">
         <img class="card-img-top" src="/static/images/LabListing1.jpg" height="400px"  alt="Card image cap"> 
         <div class="text-container">
@@ -30,6 +74,8 @@
         </div>
     </div>
       <div class="row justify-content-center">
+
+
         <div class="col-4">
           <div class="card">
             <img src="/static/images/DBMS.png"  height="200px" class="card-img-top"
@@ -46,6 +92,24 @@
             </div>
           </div>
         </div>
+
+        {% for i in lablist %}
+        <div class="col-4">
+          <div class="card" style="height: 180;">
+            
+            <div class="card-body">
+              <h5 class="card-title">{{i.labname}}</h5>
+              <p class="card-text">{{i.description}}</p>
+              {% set stri="#"+"lab"+i.lab_id|string %}
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="{{stri}}">
+                View Details
+                
+              </button>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
         <div class="col-4">
           <div class="card">
             <img src="/static/images/CNS.jpg"  height="200px" class="card-img-top"
@@ -169,6 +233,10 @@
             </div>
           </div>
           </div>
+
+      
+
+      
       
 </body>
 </html>
